@@ -1,0 +1,27 @@
+default: &default 
+    default_action: CANCEL
+    approval_role: ENTERPRISE_ADMIN
+
+    mail_from: some_address@test.com
+    approval_subject: You have a pending task pending for approval
+
+    requester_subject: A pending task has been updated
+
+    smtp_settings:
+        email_link_host: localhost
+        email_link_port: 3000
+        port: 587
+        address: smtp.mailgun.org
+        domain: sandbox.mailgun.org
+        user_name: postmaster@sandbox.mailgun.org
+        password: somepassword
+        authentication: :plain
+
+development:
+    <<: *default
+
+test:
+    <<: *default
+
+production:
+    <<: *default

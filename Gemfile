@@ -33,6 +33,8 @@ gem 'jbuilder', '~> 2.5'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'pry', '~> 0.10.4'
+  gem 'pry-byebug', '~> 3.4.0'
 end
 
 group :development do
@@ -46,3 +48,14 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Background processing
+gem 'resque', '~> 1.26.0', :require => 'resque/server'
+# https://github.com/resque/resque/issues/1492
+gem 'sinatra', github: 'sinatra/sinatra', branch: 'master'
+
+# Abiquo API gem
+gem 'abiquo-api', '~> 0.0.7'
+
+# Foreman process manager
+gem 'foreman', '~> 0.82.0'
