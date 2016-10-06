@@ -1,24 +1,11 @@
 FROM ruby:2.3.1
 
-RUN apt-get update -qq && apt-get install -y build-essential
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev libxml2-dev libxslt1-dev libqt4-webkit libqt4-dev xvfb nodejs
 
-# for postgres
-RUN apt-get install -y libpq-dev
+RUN mkdir /workflow-client-ruby
+WORKDIR /workflow-client-ruby
 
-# for nokogiri
-RUN apt-get install -y libxml2-dev libxslt1-dev
-
-# for capybara-webkit
-RUN apt-get install -y libqt4-webkit libqt4-dev xvfb
-
-# for a JS runtime
-RUN apt-get install -y nodejs
-
-ENV APP_HOME /workflow-client-ruby
-RUN mkdir $APP_HOME
-WORKDIR $APP_HOME
-
-ADD Gemfile* $APP_HOME/
+ADD Gemfile* /workflow-client-ruby/
 RUN bundle install
 
-ADD . $APP_HOME
+ADD . /workflow-client-ruby
