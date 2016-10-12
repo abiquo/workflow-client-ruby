@@ -9,3 +9,8 @@ ADD Gemfile* /workflow-client-ruby/
 RUN bundle install
 
 ADD . /workflow-client-ruby
+
+RUN bundle exec rake db:migrate
+
+EXPOSE 3000
+CMD bundle exec foremant start
