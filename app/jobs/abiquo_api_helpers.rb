@@ -76,7 +76,7 @@ class AbiquoAPIHelpers
             end
 
             vm_hashes << {
-                task: task.id,
+                task: task.uuid,
                 name: vm.name,
                 cpu: vm.cpu,
                 ram: vm.ram,

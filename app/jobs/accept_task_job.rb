@@ -31,6 +31,10 @@ class AcceptTaskJob < ApplicationJob
                                        type: 'application/vnd.abiquo.user+json',
                                        client: abq
         user_email = user_lnk.get.email
-        TasksMailer.send_requester_email(task_details, user_email).deliver_later
+        unless user_email.empty?
+            TasksMailer.send_requester_email(task_details, user_email).deliver_later
+        else
+            log.info "Not sending email to requester user as it has no email set in Abiquo."
+        end
     end
 end
