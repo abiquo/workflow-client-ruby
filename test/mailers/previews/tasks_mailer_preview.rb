@@ -15,7 +15,7 @@ class TasksMailerPreview < ActionMailer::Preview
                     cpu: 1,
                     ram: 128,
                     persistent: true,
-                    task: 8,
+                    task: '5b892d08-96cb-11e6-bc3f-b34176b38306',
                     disks: [
                         {
                             type: "VOLUME",

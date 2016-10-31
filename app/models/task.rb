@@ -25,7 +25,8 @@ class Task < ApplicationRecord
             target_url: h['links'].select {|l| l['rel'] == 'target' }.first.to_json,
             continue_url: h['links'].select {|l| l['rel'] == 'continue' }.first.to_json,
             cancel_url: h['links'].select {|l| l['rel'] == 'cancel' }.first.to_json,
-            active: true
+            active: true,
+            uuid: SecureRandom.uuid
         )
     end
 end

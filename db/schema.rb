@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161004085343) do
+ActiveRecord::Schema.define(version: 20161020131012) do
 
   create_table "tasks", force: :cascade do |t|
     t.datetime "created_at",   null: false
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20161004085343) do
     t.string   "continue_url"
     t.string   "cancel_url"
     t.integer  "active"
+    t.string   "uuid"
   end
 
 end

@@ -2,7 +2,7 @@ class TasksController < ApplicationController
     protect_from_forgery with: :null_session
 
     def accept
-        task = Task.find(params[:id])
+        task = Task.find_by_uuid(params[:uuid])
         unless validate_task(task)
             @message = "Requested task ID is not valid!"
         else
@@ -12,7 +12,7 @@ class TasksController < ApplicationController
     end
 
     def cancel
-        task = Task.find(params[:id])
+        task = Task.find_by_uuid(params[:uuid])
         unless validate_task(task)
             @message = "Requested task ID is not valid!"
         else
@@ -22,8 +22,8 @@ class TasksController < ApplicationController
     end
 
     def multiple
-        task_ids = params[:tasks].split(',')
-        tasks = Task.find(task_ids)
+        task_uuids = params[:tasks].split(',')
+        tasks = Task.find_by_uuid(task_uuids)
         case params[:task_action]
         when 'accept'
             AcceptTaskJob.perform_later(tasks)
@@ -36,6 +36,6 @@ class TasksController < ApplicationController
     private 
 
     def validate_task(task)
-        task.active?
+        task && task.active?
     end
 end
