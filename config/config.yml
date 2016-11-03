@@ -7,6 +7,11 @@ default: &default
 
     requester_subject: A pending task has been updated
 
+    approval_task_types:
+        - DEPLOY
+        - UNDEPLOY
+        - RECONFIGURE
+
     email_render_links: true
 
     smtp_settings:

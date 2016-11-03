@@ -6,6 +6,13 @@ class ProcessTasksJob < ApplicationJob
         
         task_details = AbiquoAPIHelpers.retrieve_tasks_details(tasks)
 
+        type = task_details[:task_type]
+        unless APP_CONFIG['approval_task_types'].include? type
+            log.info "Task with type #{type} is not configured to be processed. Accepting."
+            AcceptTaskJob.perform_later(tasks)
+            return
+        end
+
         # Retrieve email notification list
         log.info "Retrieving approval emails..."
         abq = AbiquoAPI.new($abiquo_config)
