@@ -25,6 +25,8 @@ class AbiquoAPIHelpers
         # Get the username that created the task
         log.info "Retrieving VM details..."
         task_details[:username] = abq_user.name
+        task_details[:user_role] = abq_user.link(:role).title
+
         # Task type
         task_details[:task_type] = first_task.task_type
         # VDC name
