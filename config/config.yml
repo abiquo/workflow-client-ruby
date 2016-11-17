@@ -13,7 +13,7 @@ default: &default
         - UNDEPLOY
         - RECONFIGURE
 
-    email_render_links: true
+    email_render_links: false
 
     smtp_settings:
         email_link_host: localhost
