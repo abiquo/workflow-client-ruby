@@ -3,7 +3,7 @@ class ProcessTasksJob < ApplicationJob
 
     def perform(tasks)
         log = Rails.logger
-        
+
         task_details = AbiquoAPIHelpers.retrieve_tasks_details(tasks)
 
         # Only process if task is configured to be processed
@@ -18,7 +18,12 @@ class ProcessTasksJob < ApplicationJob
         if task_details[:user_role] == APP_CONFIG['approval_role']
             log.info "Requester #{task_details[:username]} has approval role #{APP_CONFIG['approval_role']}"
             log.info "Performing default #{APP_CONFIG['default_role_action']}."
-            perform_default APP_CONFIG['default_role_action']
+            case APP_CONFIG['default_role_action']
+            when 'ACCEPT'
+                AcceptTaskJob.perform_later(tasks, false)
+            when 'CANCEL'
+                CancelTaskJob.perform_later(tasks, false)
+            end
             return
         end
 
@@ -38,7 +43,12 @@ class ProcessTasksJob < ApplicationJob
         # Handle empty notification address
         if approval_emails.count == 0
             log.info "No approval emails found, taking default action #{APP_CONFIG['default_action']}"
-            perform_default APP_CONFIG['default_action']
+            case APP_CONFIG['default_action']
+            when 'ACCEPT'
+                AcceptTaskJob.perform_later(tasks, false)
+            when 'CANCEL'
+                CancelTaskJob.perform_later(tasks, false)
+            end
         else
             # Queue the Mailer
             TasksMailer.send_approval_email(task_details, approval_emails).deliver_later
@@ -47,10 +57,10 @@ class ProcessTasksJob < ApplicationJob
 
     private
 
-    def perform_default(action)
+    def perform_default(action, tasks)
         case action
         when 'ACCEPT'
-            AcceptTaskJob.perform_later(tasks)
+            AcceptTaskJob.perform_later(tasks, false)
         when 'CANCEL'
             CancelTaskJob.perform_later(tasks)
         end

@@ -8,8 +8,16 @@
     <p style="margin: 0 0 10px"/>
       <div class="container well well-large" style="padding: 19px 19px;width: 940px;margin-right: auto;margin-left: auto;min-height: 20px;margin-bottom: 20px;border: 1px solid #e3e3e3;-webkit-border-radius: 6px;-moz-border-radius: 6px;border-radius: 6px;-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05)">
         <p class="text-center" style="margin: 0 0 10px;text-align: center"/>
-          <h1 style="margin: 10px 0;font-family: inherit;font-weight: bold;line-height: 20px;color: #22ABFB;text-rendering: optimizelegibility;font-size: 38.5px">SAP Cloud Task</h1>
-          <%= image_tag attachments['logo_swisscom.jpg'].url, style: "width: 200px; position: absolute; top: 25px; right: 245px;" %>
+          <table class="table table-condensed" style="max-width: 100%;background-color: transparent;border-collapse: collapse;border-spacing: 0;width: 100%;margin-bottom: 20px">
+            <tr>
+              <td>
+                <h1 style="margin: 10px 0;font-family: inherit;font-weight: bold;line-height: 20px;color: #22ABFB;text-rendering: optimizelegibility;font-size: 38.5px">SAP Cloud Task</h1>
+              </td>
+              <td align="right">
+                <%= image_tag attachments['logo_swisscom.jpg'].url %>
+              </td>
+            </tr>
+          </table>
           <p style="margin: 0 0 10px">
             <span>A new task has been submitted by user
               <span class="label label-info" style="display: inline-block;padding: 2px 4px;font-size: 11.844px;font-weight: bold;line-height: 14px;color: #fff;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);white-space: nowrap;vertical-align: baseline;background-color: #001155;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px"><%= @tasks[:username] %>
@@ -77,6 +85,7 @@
               <li>Go to virtual datacenters section and open the workflow tasks. there you can approve or reject your request</li>
             </ol>
             <p><span>The requester of the task(s) will be informed on your decision by email.</span></p>
+            <p><span>This is system-generated message. Please do not respond to this email.</span></p>
           <% end %>
           </p>
           <script src="http://code.jquery.com/jquery.js"/><script src="http://twitter.github.io/bootstrap/assets/js/bootstrap.min.js"/>

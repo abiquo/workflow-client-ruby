@@ -1,6 +1,6 @@
 class TasksMailer < ApplicationMailer
     default from: APP_CONFIG['mail_from']
-    
+        
     def send_approval_email(task_details, emails)
         attachments.inline['logo_swisscom.jpg'] = File.read(Rails.root.join('app', 'assets', 'images', 'logo_swisscom.jpg'))
 
@@ -11,6 +11,8 @@ class TasksMailer < ApplicationMailer
     end
 
     def send_requester_email(task_details, email)
+        attachments.inline['logo_swisscom.jpg'] = File.read(Rails.root.join('app', 'assets', 'images', 'logo_swisscom.jpg'))
+        
         @tasks = task_details
         mail(to: email, subject: APP_CONFIG['requester_subject'])
     end

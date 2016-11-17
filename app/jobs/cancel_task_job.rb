@@ -1,7 +1,7 @@
 class CancelTaskJob < ApplicationJob
     queue_as :cancel
 
-    def perform(tasks)
+    def perform(tasks, send_email=false)
         log = Rails.logger
 
         task_details = AbiquoAPIHelpers.retrieve_tasks_details(tasks)
@@ -21,7 +21,7 @@ class CancelTaskJob < ApplicationJob
                 log.error "Error ocurred cancelling task:"
                 log.error e.message
                 log.debug e.backtrace
-                exit 1
+                raise e
             end
         end
         task_details[:vm_details].map {|v| v[:task_action] = 'CANCELLED' }
@@ -32,7 +32,11 @@ class CancelTaskJob < ApplicationJob
                                        client: abq
         user_email = user_lnk.get.email
         unless user_email.empty?
-            TasksMailer.send_requester_email(task_details, user_email).deliver_later
+            if send_email
+                TasksMailer.send_requester_email(task_details, user_email).deliver_later
+            else
+                log.info "Not sending email as we were instructed not to."
+            end
         else
             log.info "Not sending email to requester user as it has no email set in Abiquo."
         end
