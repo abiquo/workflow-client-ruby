@@ -1,11 +1,14 @@
 class Task < ApplicationRecord
     def self.from_json(json_str)
+        Rails.logger.info "Received task:"
+        Rails.logger.info json_str
+
         task_hash = JSON.parse(json_str)
 
         tasks = []
     
         if task_hash.key? 'collection' # Multiple tasks
-            task_hash.each do |task|
+            task_hash['collection'].each do |task|
                 tasks << task_from_hash(task)
             end
         else
