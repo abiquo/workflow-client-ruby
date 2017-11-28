@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+ruby '2.3.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
@@ -22,19 +22,12 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  gem 'pry', '~> 0.10.4'
-  gem 'pry-byebug', '~> 3.4.0'
+  gem 'pry'
+  gem 'pry-byebug'
 end
 
 group :development do
@@ -50,12 +43,12 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Background processing
-gem 'resque', '~> 1.26.0', :require => 'resque/server'
+gem 'resque', :require => 'resque/server'
 # https://github.com/resque/resque/issues/1492
-gem 'sinatra', github: 'sinatra/sinatra', branch: 'master'
+# gem 'sinatra', github: 'sinatra/sinatra', branch: 'master'
 
 # Abiquo API gem
-gem 'abiquo-api', '~> 0.0.7'
+gem 'abiquo-api'
 
 # Foreman process manager
-gem 'foreman', '~> 0.82.0'
+gem 'foreman'

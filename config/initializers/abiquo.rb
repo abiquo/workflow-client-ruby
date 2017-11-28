@@ -1,4 +1,5 @@
 rails_root = ENV['RAILS_ROOT'] || File.dirname(__FILE__) + '/../..'
 rails_env = ENV['RAILS_ENV'] || 'development'
 
-$abiquo_config = YAML.load_file(rails_root + '/config/abiquo.yml')[rails_env].symbolize_keys
+template = ERB.new(File.new(rails_root + '/config/abiquo.yml').read)
+ABQ_CONFIG = YAML.load(template.result(binding))[rails_env].symbolize_keys

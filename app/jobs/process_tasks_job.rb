@@ -7,8 +7,9 @@ class ProcessTasksJob < ApplicationJob
         task_details = AbiquoAPIHelpers.retrieve_tasks_details(tasks)
 
         # Only process if task is configured to be processed
+        types = APP_CONFIG['approval_task_types'].split(",")
         type = task_details[:task_type]
-        unless APP_CONFIG['approval_task_types'].include? type
+        unless types.include? type
             log.info "Task with type #{type} is not configured to be processed. Accepting."
             AcceptTaskJob.perform_later(tasks)
             return

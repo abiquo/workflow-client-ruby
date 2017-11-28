@@ -1,6 +1,6 @@
 unless Rails.application.config.action_mailer.nil?
-
-    options = YAML.load_file(Rails.root.join('config', 'config.yml'))[Rails.env]['smtp_settings']
+    template = ERB.new(Rails.root.join('config', 'config.yml').read)
+    options = YAML.load(template.result(binding))[Rails.env]['smtp_settings']
 
     Rails.application.config.action_mailer.raise_delivery_errors = true
     Rails.application.config.action_mailer.perform_deliveries = true

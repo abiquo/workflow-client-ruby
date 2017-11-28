@@ -1,31 +1,28 @@
-default: &default 
-    default_action: CANCEL
-    default_role_action: ACCEPT
-    approval_role: ENTERPRISE_ADMIN
+default: &default
+    template_path: <%= ENV["WF_TEMPLATE_PATH"] || "default" %>
+    logo_file: <%= ENV["WF_LOGO_FILE"] || "" %>
+    default_action: <%= ENV["WF_DEFAULT_ACTION"] || "CANCEL" %>
+    default_role_action: <%= ENV["WF_DEFAULT_ROLE_ACTION"] || "ACCEPT" %>
+    approval_role: <%= ENV["WF_APPROVAL_ROLE"] || "ENTERPRISE_ADMIN" %>
 
-    mail_from: some_address@test.com
-    approval_subject: You have a pending task pending for approval
+    mail_from: <%= ENV["WF_MAIL_FROM"] || "some_address@test.com" %>
+    approval_subject: <%= ENV["WF_APPROVAL_SUBJECT"] || "You have a pending task pending for approval" %>
+    requester_subject: <%= ENV["WF_REQUESTER_SUBJECT"] || "A pending task has been updated" %>
 
-    requester_subject: A pending task has been updated
-
-    approval_task_types:
-        - DEPLOY
-        - UNDEPLOY
-        - RECONFIGURE
-
-    email_render_links: false
+    approval_task_types: <%= ENV["WF_TASK_TYPES"] || "DEPLOY,UNDEPLOY,RECONFIGURE" %>
+    email_render_links: <%= ENV["WF_EMAIL_LINKS"] || "true" %>
 
     smtp_settings:
-        email_link_host: localhost
-        email_link_port: 3000
-        email_link_protocol: http
-        email_link_path: /workflow
-        port: 587
-        address: smtp.mailgun.org
-        domain: sandbox.mailgun.org
-        user_name: postmaster@sandbox.mailgun.org
-        password: somepassword
-        authentication: :plain
+        email_link_host: <%= ENV["WF_EMAIL_LINK_HOST"] || "localhost" %>
+        email_link_port: <%= ENV["WF_EMAIL_LINK_PORT"] || "3000" %>
+        email_link_protocol: <%= ENV["WF_EMAIL_LINK_PROTO"] || "http" %>
+        email_link_path: <%= ENV["WF_EMAIL_LINK_PATH"] || "" %>
+        port: <%= ENV["WF_SMTP_PORT"] || "587" %>
+        address: <%= ENV["WF_SMTP_HOST"] || "smtp.mailgun.org" %>
+        domain: <%= ENV["WF_SMTP_DOMAIN"] || "sandbox.mailgun.org" %>
+        user_name: <%= ENV["WF_SMTP_USERNAME"] || "postmaster@sandbox.mailgun.org" %>
+        password: <%= ENV["WF_SMTP_PASSWORD"] || "somepassword" %>
+        authentication: <%= ENV["WF_SMTP_AUTH"] || "plain" %>
 
 development:
     <<: *default

@@ -1,3 +1,4 @@
 rails_root = ENV['RAILS_ROOT'] || File.dirname(__FILE__) + '/../..'
 
-APP_CONFIG = YAML.load_file(rails_root + '/config/config.yml')[Rails.env]
+template = ERB.new(File.new(rails_root + '/config/config.yml').read)
+APP_CONFIG = YAML.load(template.result(binding))[Rails.env]

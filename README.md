@@ -41,46 +41,30 @@ This application uses the [abiquo-api](https://rubygems.org/gems/abiquo-api) gem
 
 ### config.yml
 
-Contains parameters to control the behaviour of the client.
-
-```
-production:
-    default_action: CANCEL
-    approval_role: ENTERPRISE_ADMIN
-
-    mail_from: postmaster@sandbox.mailgun.org
-    approval_subject: You have a pending task pending for approval
-
-    requester_subject: A pending task has been updated
-
-    smtp_settings:
-        email_link_host: localhost
-        email_link_port: 3000
-        port: 587
-        address: smtp.mailgun.org
-        domain: andbox94c2fdcf26ff4f78be47eee834eb9507.mailgun.org
-        user_name: postmaster@sandbox94c2fdcf26ff4f78be47eee834eb9507.mailgun.org
-        password: s95GXLca
-        authentication: :plain
-```
-
-Here's the reference of supported options:
+Contains parameters to control the behaviour of the client. Here's the reference of supported options:
 
 Key               | Description                                                      | Type   | Default
 ------------------|------------------------------------------------------------------|--------|-------------
-`default_action` | The action to take by default when no approver's email can be found | String | "CANCEL"
-`approval_role` | The role responsible for approving requests. Users in the enterprise with this role will be notified for approval | String | "ENTERPRISE_ADMIN"
+`template_path`   | The path under `app/views` to look for the email templates       | String | default
+`logo_file`      | A logo file to be added as an attachement to the email. The file must exist under `app/assets/images` | String | ""
+`default_action` | The action to take by default when no approver's email can be found | String | CANCEL
+`default_role_action` | The action to take by default when the requestuer role is the same as one configured in `approval_role` | String | ACCEPT
+`approval_role` | The role responsible for approving requests. Users in the enterprise with this role will be notified for approval | String | ENTERPRISE_ADMIN
 `mail_from` | `From` line in the emails sent by the application  | String | some_address@test.com
-`approval_subject` | The subject in the emails sent asking for approval | String | "You have a pending task pending for approval"
-`requester_subject` | The subject in the emails sent to notify approval result | String | "A pending task has been updated"
+`approval_subject` | The subject in the emails sent asking for approval | String | You have a pending task pending for approval
+`requester_subject` | The subject in the emails sent to notify approval result | String | A pending task has been updated
+`approval_task_types` | Comma sepparated list of task types to process. | String | DEPLOY,UNDEPLOY,RECONFIGURE
+`email_render_links` | Whether or not to include links in the email to accept or reject tasks | String | true
 `smtp_settings` | The [SMTP settings](http://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration) for the Rails application | Hash | 
 
-In addition to the Rails ActionMailer config, the `smtp_settings` include 2 additional properties:
+In addition to the Rails ActionMailer config, the `smtp_settings` include some additional properties:
 
-Key               | Description                                                      | Type   | Default
-------------------|------------------------------------------------------------------|--------|-------------
-`email_link_host` | The host used to build the links in the action buttons in emails | String | "localhost"
-`email_link_port` | The port used to build the links in the action buttons in emails | FixNum | 3000
+Key                   | Description                                                          | Type   | Default
+----------------------|----------------------------------------------------------------------|--------|-------------
+`email_link_host`     | The host used to build the links in the action buttons in emails     | String | localhost
+`email_link_port`     | The port used to build the links in the action buttons in emails     | FixNum | 3000
+`email_link_protocol` | The protocol used to build the links in the action buttons in emails | String | http
+`email_link_path`     | The path used to build the links in the action buttons in emails, if you are running this behind a proxy. | String | ""
 
 ### database.yml
 

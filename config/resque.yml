@@ -1,2 +1,2 @@
-development: localhost:6379
-production: localhost:6379
+development: <%= ENV["REDIS_HOST"] || "localhost" %>:<%= ENV["REDIS_PORT"] || "6379" %>
+production: <%= ENV["REDIS_HOST"] || "localhost" %>:<%= ENV["REDIS_PORT"] || "6379" %>
