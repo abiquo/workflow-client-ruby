@@ -7,7 +7,7 @@ class CancelTaskJob < ApplicationJob
         task_details = AbiquoAPIHelpers.retrieve_tasks_details(tasks)
 
         log.info "Connecting to Abiquo API..."
-        abq = AbiquoAPI.new($abiquo_config)
+        abq = AbiquoAPI.new(ABQ_CONFIG)
 
         tasks.each do |task|
             begin

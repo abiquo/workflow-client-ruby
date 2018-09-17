@@ -30,7 +30,7 @@ class ProcessTasksJob < ApplicationJob
 
         # Retrieve email notification list
         log.info "Retrieving approval emails..."
-        abq = AbiquoAPI.new($abiquo_config)
+        abq = AbiquoAPI.new(ABQ_CONFIG)
         ent_lnk = AbiquoAPI::Link.new href: 'admin/enterprises',
                                       type: 'application/vnd.abiquo.enterprises+json',
                                       client: abq

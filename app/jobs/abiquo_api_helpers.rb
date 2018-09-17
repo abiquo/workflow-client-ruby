@@ -3,7 +3,7 @@ class AbiquoAPIHelpers
         log = Rails.logger
 
         log.info "Connecting to Abiquo API..."
-        abq = AbiquoAPI.new($abiquo_config)
+        abq = AbiquoAPI.new(ABQ_CONFIG)
 
         task_details = {}
 
