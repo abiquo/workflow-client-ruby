@@ -1,0 +1,54 @@
+version: '2'
+services:
+  web: &web
+    build:
+      context: .
+      args:
+        - LOCAL_BUILD=true
+    volumes:
+      - .:/app
+    command: bundle exec rails s
+    environment:
+      DATABASE_URL: mysql2://workflow:workflow@db/workflow
+      REDIS_HOST: redis
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+      - redis
+  mailer_worker:
+    <<: *web
+    command: bundle exec rake resque:work
+    environment:
+      DATABASE_URL: mysql2://workflow:workflow@db/workflow
+      REDIS_HOST: redis
+      QUEUE: mailers
+    ports: []
+  approval_worker:
+    <<: *web
+    command: bundle exec rake resque:work
+    environment:
+      DATABASE_URL: mysql2://workflow:workflow@db/workflow
+      REDIS_HOST: redis
+      QUEUE: pending_tasks
+    ports: []
+  requester_worker:
+    <<: *web
+    command: bundle exec rake resque:work
+    environment:
+      DATABASE_URL: mysql2://workflow:workflow@db/workflow
+      REDIS_HOST: redis
+      QUEUE: accept,cancel
+    ports: []
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: temporal
+      MYSQL_USER: workflow
+      MYSQL_PASSWORD: workflow
+      MYSQL_DATABASE: workflow
+  redis:
+    image: redis
+volumes:
+  bundle:
+  node:

@@ -52,3 +52,5 @@ gem 'abiquo-api'
 
 # Foreman process manager
 gem 'foreman'
+
+gem 'mysql2', '>= 0.4.4', '< 0.5'
